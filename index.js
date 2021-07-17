@@ -1,9 +1,13 @@
 const Discord = require('discord.js');
 const fs = require('fs');
+const dotenv = require('dotenv');
+
 
 const client = new Discord.Client();
-
+const apiKey = process.env.DISCORD_API_KEY;
 const prefix = '!'
+
+dotenv.config();
 
 client.commands = new Discord.Collection();
 
@@ -21,4 +25,4 @@ client.on('message', message =>{
     }
 })
 
-client.login(''); //API key here
+client.login(apiKey); //API key here
