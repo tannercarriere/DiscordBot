@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const dotenv = require('dotenv');
+const { Console } = require('console');
 dotenv.config();
 
 const client = new Discord.Client(); //Create session does not start the session
@@ -8,7 +9,7 @@ const apiKey = process.env.DISCORD_API_KEY;// Grab the API key from the .env fil
 const prefix = '!'; //the prefix is what we use to tell the bot that we're issuing a command
 const superUser = process.env.SUPER_USER_ID;// Grab the super user id from the .env file
 const commandFile = fs.readdirSync('./commands/').filter(file => file.endsWith(".js"));//grab all command files from the commands folder
-let dir = ".";
+let dir = ["."];
 
 //Adds every command to a discord collection 
 client.commands = new Discord.Collection();
@@ -36,7 +37,11 @@ client.on('message', message =>{
         client.commands.get(cmd.toString()).execute(message, args, superUser, dir);
         return;
     }
-
+    if(cmd.toString()==='cd'){
+        client.commands.get(cmd.toString()).execute(message, args, superUser, dir);
+        return;
+    }
+    
     client.commands.get(cmd.toString()).execute(message, args, superUser);
 });
 

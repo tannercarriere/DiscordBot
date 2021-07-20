@@ -8,9 +8,15 @@ module.exports = {
     name: 'ls',
     description: 'A bot specific ls.',
     execute(message, args, role, dir){
-        const { spawn } = require( 'child_process' );
-        const cmd = spawn('wsl', ['ls', dir]);
+        curDirectory = "";
+        dir.forEach(value => {
+            console.log(value);
+            curDirectory += `${value}/`;
+        });
 
+        const { spawn } = require( 'child_process' );
+        const cmd = spawn('wsl', ['ls', curDirectory]);
+        console.log(curDirectory);
         cmd.stdout.on('data', ( data ) => message.channel.send( `stdout: ${ data }`));
     }
 }
