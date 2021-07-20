@@ -10,6 +10,8 @@ const prefix = '!'; //the prefix is what we use to tell the bot that we're issui
 const superUser = process.env.SUPER_USER_ID;// Grab the super user id from the .env file
 const commandFile = fs.readdirSync('./commands/').filter(file => file.endsWith(".js"));//grab all command files from the commands folder
 let dir = ["."];
+let rec = false;
+let recMsg = [];
 
 //Adds every command to a discord collection 
 client.commands = new Discord.Collection();
@@ -28,6 +30,9 @@ client.once('ready', ()=>{
  * We pop off the first arguement which is the command for the bot, then check that the command exsists, if it does it gets executed.
  */
 client.on('message', message =>{
+    if(rec && !message.content.startsWith("!dump") && !message.author.bot){
+        recMsg.push(message.content);
+    }
     if(!message.content.startsWith(prefix) || message.author.bot){return}
     const args = message.content.slice(prefix.length).split(/ +/);
     const cmd = args.shift().toLowerCase();
@@ -39,6 +44,14 @@ client.on('message', message =>{
     }
     if(cmd.toString()==='cd'){
         client.commands.get(cmd.toString()).execute(message, args, superUser, dir);
+        return;
+    }
+    if(cmd.toString()==="rec"){
+        rec = true;
+    }
+    if(cmd.toString()==="dump"){
+        rec = false;
+        client.commands.get(cmd.toString()).execute(message, args, superUser, recMsg);
         return;
     }
     
