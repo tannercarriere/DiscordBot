@@ -51,7 +51,8 @@ client.on('message', message =>{
     }
     if(cmd.toString()==="dump"){
         rec = false;
-        client.commands.get(cmd.toString()).execute(message, args, superUser, recMsg);
+        console.log("args: " + args);
+        client.commands.get(cmd.toString()).execute(message, args, superUser, recMsg.splice(0,recMsg.length));
         return;
     }
     

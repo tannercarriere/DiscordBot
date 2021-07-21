@@ -1,20 +1,28 @@
 const fs = require('fs');
-const fetch = require('node-fetch');
 module.exports = {
     name: 'dump',
-    description: 'dumps messages recorded by the rec command',
+    description: 'dumps messages recorded by the rec command. can specify what kind of file we would like defaults to .txt.',
     execute(message, args, role, recMsg){
         message.channel.send("⚫ recording stopped");
         if(recMsg.length === 0){
             return;
         }
         const channelName = message.channel.name;
-        const fileName = `${channelName}-${Date.now()}.txt`;
+        let fileName;
+        if(args.length > 0){
+            fileName = `${channelName}-${Date.now()}.${args}`;
+        }else{
+            fileName = `${channelName}-${Date.now()}.txt`;
+        }
         //Make a directory for the channel that the command was called on.
         fs.mkdirSync(channelName, { recursive: true }, (err) => {if (err) console.log(err);});
         //Create a write stream for the file we are going to create
-        const dest = fs.createWriteStream(`./${channelName}/${fileName}`);
+        const file = fs.createWriteStream(`./${channelName}/${fileName}`);
+        file.on('error', err => {file.end();console.log(err)})
+        recMsg.forEach(val =>{
+            file.write(val.concat('\n'));
+        })
         //write each thing stored in the recMsg array.
-        fs.writeFile(`./${channelName}/${fileName}`, recMsg.splice(0,recMsg.length), { flag: 'w+' }, err => {});
+        file.end();
 }
 }
