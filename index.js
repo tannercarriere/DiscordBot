@@ -37,26 +37,24 @@ client.on('message', message =>{
     const args = message.content.slice(prefix.length).split(/ +/);
     const cmd = args.shift().toLowerCase();
 
-    if(!client.commands.get(cmd.toString())){return}
-    if(cmd.toString()==='ls'){
-        client.commands.get(cmd.toString()).execute(message, args, superUser, dir);
+    if(!client.commands.get(cmd)){return}
+    //directory based commands
+    if(cmd==='ls'||cmd==='cd'||cmd==='play'){
+        client.commands.get(cmd).execute(message, args, dir);
         return;
     }
-    if(cmd.toString()==='cd'){
-        client.commands.get(cmd.toString()).execute(message, args, superUser, dir);
-        return;
-    }
-    if(cmd.toString()==="rec"){
+    //non-directory based commands
+    if(cmd==="rec"){
+        client.commands.get(cmd).execute(message);
         rec = true;
     }
-    if(cmd.toString()==="dump"){
+    if(cmd==="dump"){
         rec = false;
         console.log("args: " + args);
-        client.commands.get(cmd.toString()).execute(message, args, superUser, recMsg.splice(0,recMsg.length));
+        client.commands.get(cmd).execute(message, args, recMsg.splice(0,recMsg.length));
         return;
     }
-    
-    client.commands.get(cmd.toString()).execute(message, args, superUser);
+    client.commands.get(cmd).execute(message, args, superUser);
 });
 
 //Logs the bot in with the appropriate API key
