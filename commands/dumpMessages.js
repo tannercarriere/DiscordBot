@@ -2,7 +2,7 @@ const fs = require('fs');
 module.exports = {
     name: 'dump',
     description: 'dumps messages recorded by the rec command. can specify what kind of file we would like defaults to .txt.',
-    execute(message, args, role, recMsg){
+    execute(message, args, recMsg){
         message.channel.send("⚫ recording stopped");
         if(recMsg.length === 0){
             return;

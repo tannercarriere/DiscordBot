@@ -7,10 +7,9 @@
 module.exports = {
     name: 'ls',
     description: 'A bot specific ls.',
-    execute(message, args, role, dir){
+    execute(message, args, dir){
         curDirectory = "";
         dir.forEach(value => {
-            console.log(value);
             curDirectory += `${value}/`;
         });
 

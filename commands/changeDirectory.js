@@ -7,7 +7,7 @@
 module.exports = {
     name: 'cd',
     description: 'A bot specific cd.',
-    execute(message, args, role, dir){
+    execute(message, args, dir){
         if(args === ".."){//Check if the user wants to return up a level
             dir.pop();
             return;
