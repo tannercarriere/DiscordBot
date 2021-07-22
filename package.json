@@ -9,8 +9,12 @@
   "author": "Tanner",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/opus": "^0.5.3",
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
-    "node-fetch": "^2.6.1"
+    "ffmpeg-static": "^4.4.0",
+    "node-fetch": "^2.6.1",
+    "yt-search": "^2.9.0",
+    "ytdl-core": "^4.9.0"
   }
 }
