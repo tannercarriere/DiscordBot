@@ -20,7 +20,7 @@ module.exports = {
         const file = fs.createWriteStream(`./${channelName}/${fileName}`);
         file.on('error', err => {file.end();console.log(err)})
         recMsg.forEach(val =>{
-            file.write(val.concat('\n'));
+            file.write(val.content.concat('\n'));
         })
         //write each thing stored in the recMsg array.
         file.end();
