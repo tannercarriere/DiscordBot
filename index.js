@@ -31,7 +31,7 @@ client.once('ready', ()=>{
  */
 client.on('message', message =>{
     if(rec && !message.content.startsWith("!dump") && !message.author.bot){
-        recMsg.push(message.content);
+        recMsg.push(message);
     }
     if(!message.content.startsWith(prefix) || message.author.bot){return}
     const args = message.content.slice(prefix.length).split(/ +/);
@@ -39,7 +39,7 @@ client.on('message', message =>{
 
     if(!client.commands.get(cmd)){return}
     //directory based commands
-    if(cmd==='ls'||cmd==='cd'||cmd==='play'){
+    if(cmd==='ls'||cmd==='cd'||cmd==='play'||cmd==='up'||cmd==='pwd'){
         client.commands.get(cmd).execute(message, args, dir);
         return;
     }
@@ -47,10 +47,10 @@ client.on('message', message =>{
     if(cmd==="rec"){
         client.commands.get(cmd).execute(message);
         rec = true;
+        return;
     }
     if(cmd==="dump"){
         rec = false;
-        console.log("args: " + args);
         client.commands.get(cmd).execute(message, args, recMsg.splice(0,recMsg.length));
         return;
     }
