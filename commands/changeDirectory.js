@@ -8,14 +8,20 @@ module.exports = {
     name: 'cd',
     description: 'A bot specific cd.',
     execute(message, args, dir){
-        if(args === ".."){//Check if the user wants to return up a level
+        curDirectory = "";
+
+        if(args[0] === ".."){//Check if the user wants to return up a level
             dir.pop();
+            dir.forEach(value => {
+                curDirectory += `${value}/`;
+            });
+            
+            message.channel.send(`${curDirectory}`);
             return;
         }
 
         //Create a well formed file path
         dir.push(`${args}`);
-        curDirectory = "";
         dir.forEach(value => {
             curDirectory += `${value}/`;
         });
@@ -27,5 +33,10 @@ module.exports = {
             message.channel.send( `stdout: ${ data }`);
             dir.pop();
         });
+        cmd.on('exit', code =>{
+            if(code === 0){
+                message.channel.send(`${curDirectory}`);
+            }
+        })
     }
 }
