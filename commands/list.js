@@ -15,7 +15,6 @@ module.exports = {
 
         const { spawn } = require( 'child_process' );
         const cmd = spawn('wsl', ['ls', curDirectory]);
-        console.log(curDirectory);
-        cmd.stdout.on('data', ( data ) => message.channel.send( `stdout: ${ data }`));
+        cmd.stdout.on('data', ( data ) => message.channel.send( `${ data }`));
     }
 }
