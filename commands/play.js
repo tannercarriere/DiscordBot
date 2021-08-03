@@ -21,12 +21,15 @@ module.exports ={
             if(args.length === 0){message.channel.send("you need to send something to play");return;}
             if(!args[0].startsWith("-")){message.channel.send("you need to specify a source. -l for local or -yt for youtube.");return;}
             play(message, args, dir, out, channel_queue);
+            return;
         }
         if(cmd==='skip'){
             skip(message, channel_queue);
+            return;
         }
         if(cmd==='stop'){
             stop(message, channel_queue);
+            return;
         }
         
     }
@@ -52,8 +55,6 @@ async function play(message, args, dir, out, channel_queue){
             }
         })
     }else if(src === "-yt"){
-        const connect = await out.join();
-
         if(ytdl.validateURL(args[0])){
             const info = await ytdl.getInfo(args[0]);
             song = {title: info.videoDetails.title, url: info.videoDetails.video_url, src: src};
@@ -116,15 +117,15 @@ const videoPlayer = async (guild, song) => {
     await channel_queue.textChannel.send(`Now playing ${song.title}`);
 }
 
-const skip = async (guild, channelQueue) => {
-    if(!channelQueue){
-        return channelQueue.textChannel.send("their are no more songs in the queue");
+const skip = async (message, channel_queue) => {
+    if(!channel_queue){
+        return message.channel.send("their are no more songs in the queue");
     }
-    channelQueue.connection.dispatcher.end();
+    channel_queue.connection.dispatcher.end();
 }
 
-const stop = async (guild, channelQueue) => {
-    await channelQueue.textChannel.send("Stopping play back")
-    channelQueue.songs = [];
-    channelQueue.connection.dispatcher.end();
+const stop = async (message, channel_queue) => {
+    await message.channel.send("Stopping play back")
+    channel_queue.songs = [];
+    channel_queue.connection.dispatcher.end();
 }
