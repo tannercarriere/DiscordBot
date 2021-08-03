@@ -18,27 +18,28 @@ module.exports = (Discord, client, message)=>{
     if(!message.content.startsWith(prefix) || message.author.bot){return}
     const args = message.content.slice(prefix.length).split(/ +/);
     const cmd = args.shift().toLowerCase();
+    const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd));
 
-    if(!client.commands.get(cmd)){return}
+    if(!command){return}
     //directory based commands
     if(cmd==='ls'||cmd==='cd'||cmd==='up'||cmd==='pwd'){
-        client.commands.get(cmd).execute(message, args, dir);
+        command.execute(message, args, dir);
         return;
     }
     if(cmd==='play'||cmd==='skip'||cmd==='stop'){
-        client.commands.get(cmd).execute(message, args, dir, cmd);
+        command.execute(message, args, dir, cmd);
         return;
     }
     //non-directory based commands
     if(cmd==="rec"){
-        client.commands.get(cmd).execute(message);
+        command.execute(message);
         rec = true;
         return;
     }
     if(cmd==="dump"){
         rec = false;
-        client.commands.get(cmd).execute(message, args, recMsg.splice(0,recMsg.length));
+        command.execute(message, args, recMsg.splice(0,recMsg.length));
         return;
     }
-    client.commands.get(cmd).execute(message, args, superUser);
+    command.execute(message, args, superUser);
 }
