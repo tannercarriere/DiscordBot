@@ -1,7 +1,7 @@
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
 module.exports ={
-    name: 'stop',
+    name: 'depreciated',
     description: 'Stops music found on the server.',
     async execute (message, args){
         const out = message.member.voice.channel;
