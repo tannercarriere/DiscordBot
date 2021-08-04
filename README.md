@@ -12,8 +12,8 @@ maximum file size for message attachements.
 
 ## Commands
 
-| Command   | Description                |
-| :-------- | :------------------------- |
+| Command     | Description                |
+| :---------- | :------------------------- |
 | `shell`     | Creates a shell and executes whatever command is specified.                                 |
 | `cd`        | Bot specific cd. `shell` doesn't maintain state this does.                                  |
 | `ls`        | Bot specific ls. `shell` doesn't maintain state this does.                                  |
