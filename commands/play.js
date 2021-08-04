@@ -1,6 +1,7 @@
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
 const fs = require('fs');
+const path = require('path');
 
 const system_queue = new Map();
 
@@ -38,22 +39,25 @@ module.exports ={
 async function play(message, args, dir, out, channel_queue){
     const src = args.shift();
     let song = {};
+    let fileNotFound = false;
 
     if(src === "-l"){
-        curDirectory = "";
-        dir.forEach(value => {
-            console.log(value);
-            curDirectory += `${value}/`;
-        });
         let songName = args.join(' ')
-        let targetFile = `${curDirectory}/${songName}`
+        let directory = dir.slice(1,dir.length).join('\\');
+        let songPath = `${directory}\\${songName}`;;
+        let targetFile = `${path.resolve(__dirname, '..')}\\${songPath}`;//path.basename(path.dirname(filename))
+        //TODO: get music to play locally.
         fs.access(targetFile, (error)=>{
             if(error){
                 message.channel.send("File not found");
-            }else{
-                song = {title: songName, url: targetFile, src: src};
+                fileNotFound = true;
             }
-        })
+        });
+        console.log(`${path.resolve(__dirname, '..')}\\${songPath}`);
+        if(fileNotFound){
+            return;
+        }
+        song = {title: songName, url: targetFile, src: src};
     }else if(src === "-yt"){
         if(ytdl.validateURL(args[0])){
             const info = await ytdl.getInfo(args[0]);
@@ -107,13 +111,19 @@ const videoPlayer = async (guild, song) => {
         system_queue.delete(guild.id);
         return;
     }
-    
-    const stream = ytdl(song.url, {filter: 'audioonly'});
-    channel_queue.connection.play(stream, {seek: 0, volume: 0.5})
-    .on('finish', ()=>{
-        channel_queue.songs.shift();
-        videoPlayer(guild, channel_queue.songs[0]);
-    });
+    if(song.src==="-yt"){
+        const stream = ytdl(song.url, {filter: 'audioonly'});
+        channel_queue.connection.play(stream, {seek: 0, volume: 0.5})
+        .on('finish', ()=>{
+            channel_queue.songs.shift();
+            videoPlayer(guild, channel_queue.songs[0]);
+        });
+    }else if(song.src==="-l"){
+        channel_queue.connection.play(song.url).on('finish', ()=>{
+            channel_queue.songs.shift();
+            videoPlayer(guild, channel_queue.songs[0]);
+        });
+    }
     await channel_queue.textChannel.send(`Now playing ${song.title}`);
 }
 
