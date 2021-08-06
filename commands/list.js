@@ -12,9 +12,9 @@ module.exports = {
         dir.forEach(value => {
             curDirectory += `${value}/`;
         });
-
         const { spawn } = require( 'child_process' );
-        const cmd = spawn('wsl', ['ls', curDirectory]);
+        var isWin = process.platform === "win32";
+        const cmd = isWin ? spawn('wsl', ['ls', curDirectory]) : spawn( 'ls', [curDirectory] );
         cmd.stdout.on('data', ( data ) => message.channel.send( `${ data }`));
     }
 }

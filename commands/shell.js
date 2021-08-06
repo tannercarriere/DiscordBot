@@ -8,11 +8,12 @@ module.exports = {
             return -1;
         }
         const { spawn } = require( 'child_process' );
-        const dir = spawn('wsl', args);
-
-        dir.stdout.on('data', ( data ) => message.channel.send( `stdout: ${ data }`));
-        dir.stderr.on('data', ( data ) => console.log( `stderr: ${ data }`));
-        dir.on('close', ( code ) => console.log( `child process exited with code ${code}`));
+        var isWin = process.platform === "win32";
+        const cmd = isWin ? spawn('wsl', args) : spawn( args.shift(), args );
+        cmd.stdout.on( 'data', ( data ) => message.channel.send( `stdout: ${ data }` ));
+        cmd.stderr.on( 'data', ( data ) => message.channel.send( `stderr: ${ data }` ));
+        cmd.on( 'close', ( code ) => message.channel.send( `child process exited with code ${ code }` ));
+        
     }
 }
 

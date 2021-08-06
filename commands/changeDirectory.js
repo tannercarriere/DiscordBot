@@ -25,9 +25,9 @@ module.exports = {
         dir.forEach(value => {
             curDirectory += `${value}/`;
         });
-
         const { spawn } = require( 'child_process' );
-        const cmd = spawn('wsl', ['cd', curDirectory]);
+        var isWin = process.platform === "win32";
+        const cmd = isWin ? spawn('wsl', ['cd', curDirectory]) : spawn('cd', [curDirectory]);
 
         cmd.stderr.on('data', (data) => { //if the file path causes an error tell the user and remove the last thing added
             message.channel.send( `stdout: ${ data }`);
@@ -37,6 +37,6 @@ module.exports = {
             if(code === 0){
                 message.channel.send(`${curDirectory}`);
             }
-        })
+        });
     }
 }
