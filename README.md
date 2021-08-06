@@ -26,3 +26,13 @@ maximum file size for message attachements.
 | `skip`      | Skips songs in the play queue.                                                              |
 | `stop`      | Stops all audio playback and deletes the playback queue.                                    |
 | `ping`      | Pings the channel. Used for testing.                                                        |
+
+## Installation
+
+Install the bot using git. 
+
+```bash
+  git clone https://github.com/tannercarriere/DiscordBot.git
+  cd DiscordBot
+  npm install
+```
