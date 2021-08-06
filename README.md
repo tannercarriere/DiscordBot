@@ -36,3 +36,10 @@ Install the bot using git.
   cd DiscordBot
   npm install
 ```
+
+### Running
+Inside the directory you have index.js in.
+
+```bash
+  node .
+```
