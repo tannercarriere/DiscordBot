@@ -8,7 +8,7 @@ module.exports = {
     name: 'cd',
     description: 'A bot specific cd.',
     execute(message, args, dir){
-        curDirectory = "";
+        let curDirectory = "";
 
         if(args.length === 0){
             message.channel.send(`No directory specified.`);
@@ -17,10 +17,7 @@ module.exports = {
 
         if(args[0] === ".."){//Check if the user wants to return up a level
             dir.pop();
-            dir.forEach(value => {
-                curDirectory += `${value}/`;
-            });
-            
+            curDirectory = dir.join('/') + '/';
             message.channel.send(`${curDirectory}`);
             return;
         }
