@@ -4,7 +4,13 @@ const fs = require('fs');
 const path = require('path');
 
 const system_queue = new Map();
-
+/**
+ * Music functionality for the bot.
+ * 
+ * Causes the bot to join the channel that the user is in, and plays music.
+ * If stop is used it clears the queue, and leaves the channel.
+ * If skip is used it goes to the next song in the queue.
+ */
 module.exports ={
     name: 'play',
     aliases: ['skip', 'stop'],

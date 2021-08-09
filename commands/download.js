@@ -1,5 +1,10 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
+/**
+ * Downloads a message attachment.
+ * 
+ * Downloads a message attachment from the sent message to the server. 
+ */
 module.exports = {
     name: 'down',
     description: 'Downloads a file from the message to the server. Takes the file name as argument. Creates a directory for the channel that the command was called from',

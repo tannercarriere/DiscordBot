@@ -1,3 +1,8 @@
+/**
+ * Channel clear
+ * 
+ * Clears out the channel of all messages.
+ */
 module.exports = {
     name: 'clear',
     description: 'Clears all messages from a given channel',

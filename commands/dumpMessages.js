@@ -1,4 +1,12 @@
 const fs = require('fs');
+
+/**
+ * Dumps all messages recorded to a file.
+ * 
+ * Used after rec. Sends all messages to a file. if a file type is 
+ * specified it will dump to that type of file. If not it will dump
+ * to a txt file.
+ */
 module.exports = {
     name: 'dump',
     description: 'dumps messages recorded by the rec command. can specify what kind of file we would like defaults to .txt.',

@@ -1,4 +1,9 @@
 const { MessageAttachment } = require('discord.js');
+/**
+ * Uploads a file to the Discord channel. 
+ * 
+ * Uploads a specifed file by attaching it to a message and sending it to the server.
+ */
 module.exports = {
     name: 'up',
     description: 'Uploads a file from the bot\'s server to the called channel.',
