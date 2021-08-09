@@ -25,15 +25,16 @@ module.exports = {
         //Create a well formed file path
         dir.push(`${args}`);
         curDirectory = dir.join('/') + '/';
+        //create new process
         const { spawn } = require( 'child_process' );
         var isWin = process.platform === "win32";
         //Need to use the tirnary operator to dynamically assgning the spawn constant
         const cmd = isWin ? spawn('wsl', ['cd', curDirectory]) : spawn('cd', [curDirectory]);
-
         cmd.stderr.on('data', (data) => { //if the file path causes an error tell the user and remove the last thing added
             message.channel.send( `stdout: ${ data }`);
             dir.pop();
         });
+        //conditinally send the directory we change to. On successful exit print current directory
         cmd.on('exit', code =>{
             if(code === 0){
                 message.channel.send(`${curDirectory}`);
