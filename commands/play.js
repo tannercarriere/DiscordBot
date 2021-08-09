@@ -45,15 +45,14 @@ async function play(message, args, dir, out, channel_queue){
         let songName = args.join(' ')
         let directory = dir.slice(1,dir.length).join('\\');
         let songPath = `${directory}\\${songName}`;;
-        let targetFile = `${path.resolve(__dirname, '..')}\\${songPath}`;//path.basename(path.dirname(filename))
-        //TODO: get music to play locally.
+        let targetFile = `${path.resolve(__dirname, '..')}\\${songPath}`;
+        //check if file exsits
         fs.access(targetFile, (error)=>{
             if(error){
                 message.channel.send("File not found");
                 fileNotFound = true;
             }
         });
-        console.log(`${path.resolve(__dirname, '..')}\\${songPath}`);
         if(fileNotFound){
             return;
         }

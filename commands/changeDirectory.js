@@ -10,6 +10,11 @@ module.exports = {
     execute(message, args, dir){
         curDirectory = "";
 
+        if(args.length === 0){
+            message.channel.send(`No directory specified.`);
+            return;
+        }
+
         if(args[0] === ".."){//Check if the user wants to return up a level
             dir.pop();
             dir.forEach(value => {

@@ -8,10 +8,7 @@ module.exports = {
     name: 'ls',
     description: 'A bot specific ls.',
     execute(message, args, dir){
-        curDirectory = "";
-        dir.forEach(value => {
-            curDirectory += `${value}/`;
-        });
+        curDirectory = dir.join('/') + '/';
         const { spawn } = require( 'child_process' );
         var isWin = process.platform === "win32";
         //Need to use the tirnary operator to dynamically assgning the spawn constant
