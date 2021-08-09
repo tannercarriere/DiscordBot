@@ -27,6 +27,7 @@ module.exports = {
         });
         const { spawn } = require( 'child_process' );
         var isWin = process.platform === "win32";
+        //Need to use the tirnary operator to dynamically assgning the spawn constant
         const cmd = isWin ? spawn('wsl', ['cd', curDirectory]) : spawn('cd', [curDirectory]);
 
         cmd.stderr.on('data', (data) => { //if the file path causes an error tell the user and remove the last thing added

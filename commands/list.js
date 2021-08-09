@@ -14,6 +14,7 @@ module.exports = {
         });
         const { spawn } = require( 'child_process' );
         var isWin = process.platform === "win32";
+        //Need to use the tirnary operator to dynamically assgning the spawn constant
         const cmd = isWin ? spawn('wsl', ['ls', curDirectory]) : spawn( 'ls', [curDirectory] );
         cmd.stdout.on('data', ( data ) => message.channel.send( `${ data }`));
     }
