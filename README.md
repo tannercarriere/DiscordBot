@@ -17,11 +17,12 @@ maximum file size for message attachements.
 | `shell`     | Creates a shell and executes whatever command is specified.                                 |
 | `cd`        | Bot specific cd. `shell` doesn't maintain state this does.                                  |
 | `ls`        | Bot specific ls. `shell` doesn't maintain state this does.                                  |
+| `clear`     | Clears all messages sent to the channel                                                     |
 | `pwd`       | Bot specific cd. `shell` doesn't maintain state this does.                                  |
 | `up`        | Upload a file from the running server to the called Discord channel.                        |
 | `down`      | Download a file from the called Discord channel to the server running the bot.              |
 | `rec`       | Record messages until `dump` is called.                                                     |
-| `dump`      | Sends all recorded messages to a file. if no file type is specified it will dump to a .txt. |
+| `dump`      | Sends all recorded messages to a file. if no file type is specified it will dump to a txt.  |
 | `play`      | Plays either a YouTube video or a local music file. `-yt` for YouTube `-l` for local.       |
 | `skip`      | Skips songs in the play queue.                                                              |
 | `stop`      | Stops all audio playback and deletes the playback queue.                                    |
